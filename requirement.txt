@@ -1,0 +1,14 @@
+flask
+pickle
+numpy
+tflearn
+tensorflow
+random
+json
+nltk
+twitter
+requests
+pandas
+re
+tweepy
+textblob
