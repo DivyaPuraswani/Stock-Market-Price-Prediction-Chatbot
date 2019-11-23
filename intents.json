@@ -1,6 +1,11 @@
 {"intents": [
         {"tag": "stock",
-         "patterns": ["stock price for #goog", "stock details about #appl", "stock data about #ge","#goog","#ge","#aapl"],
+         "patterns": ["details about #goog", "details about #appl", "data about #ge","#goog","#ge","#aapl"],
+         "responses": ["What would you like to know "],
+         "context_set": ""
+        },
+        {"tag": "historic_data",
+         "patterns": ["1", "stock data","stock details"],
          "responses": ["What would you like to know "],
          "context_set": ""
         },
@@ -10,17 +15,17 @@
          "context_set": ""
         },
         {"tag": "twitter",
-         "patterns": ["what is the twitter sentiment?","twitter sentiment"],
+         "patterns": ["what is the twitter sentiment?","twitter sentiment","2"],
          "responses": ["Here is the twitter sentiment Analytics on the requested Ticker"],
          "context_set": ""
         },
         {"tag": "predict",
-         "patterns": ["predict close price for tomorrow","predict price","predict price for stock"],
+         "patterns": ["predict close price for tomorrow","predict price","predict price for stock","4"],
          "responses": ["The predicted Close price for the requested Ticker"],
          "context_set": ""
         },
         {"tag": "investor",
-         "patterns": ["what does the investors feel about investing","investor sentiment","what are the investors feeling"],
+         "patterns": ["what does the investors feel about investing","investor sentiment","what are the investors feeling","3"],
          "responses": ["The investor sentiment for the current week"],
          "context_set": ""
         },
