@@ -4,6 +4,7 @@ import pandas as pd
 import datetime as date
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
+from alpha_vantage.timeseries import TimeSeries
 
 class Stock:
 
@@ -61,9 +62,8 @@ class Stock:
         wed_d = today_d - date.timedelta(days=reduct)
         return str(wed_d)
 
-    def daily_stock_data(self):
+    def daily_stock_data(self, stock2 = None):
         alpha_vantage_api_key = "AUFGD5JSWQD96T0M"
-        from alpha_vantage.timeseries import TimeSeries
         # Your key here
         ts = TimeSeries(alpha_vantage_api_key)
         data, meta = ts.get_daily(symbol=str(self.ticker).split('#')[1])
@@ -71,7 +71,7 @@ class Stock:
         print(today)
         val = list(data[today].values())
         resp = "Open: " + str(val[0]) + "<br/>High: " + str(val[1]) + "<br/>Low: "
-        resp = resp + str(val[2]) + "<br/>Close: " + str(val[3]) + "<br/>Volume: " + str(val[4])
+        resp = resp + str(val[2]) + "<br/>Close: " + str(val[3]) + "<br/>Volume: " + str(val[4] + "<br/>")
         #Visualization
         data_pd = pd.DataFrame(data).T
         print(data_pd)
@@ -83,17 +83,34 @@ class Stock:
                         }
         df = data_pd.astype(convert_dict)
         figure(num=None, figsize=(15, 6), dpi=80, facecolor='w', edgecolor='k')
+
+        if stock2 != None:
+            data2, meta2 = ts.get_daily(symbol= stock2)
+            data_pd2 = pd.DataFrame(data2).T
+            df2 = data_pd2.astype(convert_dict)
+            df['4. close'] = df['4. close'] / df['4. close'].max()
+            df2['4. close'] = df2['4. close'] / df2['4. close'].max()
+            df2['4. close'].plot()
+            title = "Standardized Close price:" + self.ticker + " vs " + stock2
+            plt.title(title)
+            resp = ""
+        else:
+            title = "Close price Graph:" + self.ticker
+            plt.title(title)
         df['4. close'].plot()
         plt.tight_layout()
-        plt.ylabel("Close Price")
+        plt.ylabel("Price")
         plt.xlabel("Date")
         plt.grid()
-        plt.savefig('static/graph.jpeg',bbox_inches='tight')
+        random = str(date.datetime.today()).split(".")[1]
+        src = "static/graph" + random + ".jpeg"
+        plt.savefig(src, bbox_inches='tight')
         plt.show()
-        resp = resp + '<br/><a href="/img" target="_blank"> >>CLICK HERE<< </a>'
+        resp = resp + '<a href="/img" target="_blank"> >>CLICK HERE<< </a>' + random
         return resp
-def main():
-    st = Stock("#AAPL")
-    print(st.investor_sentiment())
-if __name__=="__main__":
-    main()
+
+# def main():
+#     st = Stock("#AAPL")
+#     print(st.daily_stock_data("#GE"))
+# if __name__=="__main__":
+#     main()

@@ -29,6 +29,11 @@
          "responses": ["The investor sentiment for the current week"],
          "context_set": ""
         },
+        {"tag": "compare",
+         "patterns": ["compare this stock with goog","compare to aapl","compare to ge","compare with goog"],
+         "responses": ["The investor sentiment for the current week"],
+         "context_set": ""
+        },
         {"tag": "goodbye",
          "patterns": ["cya", "see you later", "goodbye", "i am leaving", "have a good day"],
          "responses": ["Sad to see you go :(", "Talk to you later", "Goodbye!"],

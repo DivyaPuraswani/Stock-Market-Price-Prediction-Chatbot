@@ -113,10 +113,12 @@ class chat:
             if tag == 'stock':
                 stock_name = "#" + inp.split('#')[1]
                 self.tick = stock_name
-                res = str('What would you like to know about ' + stock_name.upper() + '<br/>1)Stock Data '
+                res = str('What would you like to know about ' + stock_name.upper()
+                          + '<br/>1)Stock Data '
                           + '<br/>2)Twitter Sentiment '
                           + '<br/>3)Investor Sentiment'
-                          + '<br/>4)Forecast of Stock')
+                          + '<br/>4)Forecast of Stock'
+                          + '<br/>5)Compare with another Stock')
                 return res
             elif tag == 'historic_data':
                 st = Stock(self.tick)
@@ -129,6 +131,11 @@ class chat:
                 return st.investor_sentiment()
             elif tag == 'predict':
                 return '<a href="/img" target="_blank"> >>CLICK HERE<< </a>'
+            elif tag == 'compare':
+                st = Stock(self.tick)
+                input = inp.split(' ')
+                compare_stock = input[len(input)-1]
+                return st.daily_stock_data(compare_stock)
             else:
                 reply = None
                 for tg in self.data['intents']:
@@ -141,14 +148,14 @@ class chat:
             #print("I didn't get that. Please try again")
             reply = "I didn't get that. Please try again"
         return reply
-def main():
-    c = chat()
-    c.model_load()
-    print("Start chatting with the bot...(Hit Stop to quit)")
-    while True:
-        inp = input("You: ")
-        if inp.lower() == 'stop':
-            break
-        print(c.chatter(inp))
-if __name__ == '__main__':
-    main()
+# def main():
+#     c = chat()
+#     c.model_load()
+#     print("Start chatting with the bot...(Hit Stop to quit)")
+#     while True:
+#         inp = input("You: ")
+#         if inp.lower() == 'stop':
+#             break
+#         print(c.chatter(inp))
+# if __name__ == '__main__':
+#     main()

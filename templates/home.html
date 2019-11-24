@@ -11,6 +11,8 @@
     <style>
       body {
         font-family: monospace;
+        background-image: url('https://boygeniusreport.files.wordpress.com/2017/01/stock-market.jpg?quality=98&strip=all');
+
       }
       h1 {
         background-color: yellow;
@@ -18,6 +20,8 @@
         font-size: 3em;
         margin: 0;
         padding: 14px;
+        opacity:1;
+
       }
       h3 {
         color: black;
@@ -30,12 +34,14 @@
         margin-right: auto;
         width: 40%;
         margin-top: 60px;
+        background-color: whitesmoke;
       }
       #userInput {
         margin-left: auto;
         margin-right: auto;
         width: 40%;
         margin-top: 60px;
+        border: 1px solid black;
       }
       #textInput {
         width: 90%;
@@ -57,15 +63,16 @@
         border-radius: 2px;
       }
       .botText {
-        color: white;
+        color: Black;
         font-family: monospace;
         font-size: 17px;
         text-align: left;
         line-height: 30px;
+        font-weight: bold;
       }
       .botText span {
         background-color: #4169e1;
-        padding: 10px;
+        padding: 5px;
         border-radius: 2px;
       }
       #tidbit {
@@ -79,15 +86,19 @@
         margin-right: auto;
         width: 78%;
         margin-top: 60px;
-        border: 1px solid green;
+        border: 3px solid green;
+        background-image: url("https://www.seekpng.com/png/full/244-2449308_download-free-country-background-source-photoshop-plain-hd.png");
+        '''background-color:white;'''
       }
       .box {
         border: 2px solid black;
       }
     </style>
   </head>
-  <body>
-    <img />
+  <body >
+
+
+
     <center>
       <h1>
         <img
@@ -98,8 +109,8 @@
       </h1>
     </center>
 
-    <div class="box"></div>
-    <div class="boxed">
+    <div class="box"  ></div>
+    <div class="boxed" >
       <div>
         <div id="chatbox">
           <img
@@ -108,12 +119,16 @@
             style="width:40px;height:40px;"
           />
           <p class="botText">
-            <span>Your personal Stock Trading ChatBot ❤️</span>
+            Your personal Stock Trading ChatBot
           </p>
+
         </div>
-        <div id="userInput">
-          <input id="textInput" type="text" name="msg" placeholder="Message" />
-        </div>
+          <div id="userInput">
+              <input id="textInput" type="text" name="msg" placeholder="Message" />
+          </div>
+
+
+
       </div>
       <script>
         function chatter() {
