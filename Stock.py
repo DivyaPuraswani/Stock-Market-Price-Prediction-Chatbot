@@ -90,6 +90,8 @@ class Stock:
             df2 = data_pd2.astype(convert_dict)
             df['4. close'] = df['4. close'] / df['4. close'].max()
             df2['4. close'] = df2['4. close'] / df2['4. close'].max()
+            df2['Date'] = df2.index
+            df2.sort_values('Date', inplace=True)
             df2['4. close'].plot()
             title = "Standardized Close price:" + self.ticker + " vs " + stock2
             plt.title(title)
@@ -97,6 +99,8 @@ class Stock:
         else:
             title = "Close price Graph:" + self.ticker
             plt.title(title)
+        df['Date'] = df.index
+        df.sort_values('Date', inplace=True)
         df['4. close'].plot()
         plt.tight_layout()
         plt.ylabel("Price")
@@ -109,8 +113,8 @@ class Stock:
         resp = resp + '<a href="/img" target="_blank"> >>CLICK HERE<< </a>' + random
         return resp
 
-# def main():
-#     st = Stock("#AAPL")
-#     print(st.daily_stock_data("#GE"))
-# if __name__=="__main__":
-#     main()
+def main():
+    st = Stock("#AAPL")
+    print(st.daily_stock_data("GOOG"))
+if __name__=="__main__":
+    main()
