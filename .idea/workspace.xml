@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1ad2df7f-1722-4290-958c-9b8fc5f09134" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.pickle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/intents.json" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/intents.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.tflearn.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.tflearn.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.tflearn.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
-    </list>
+    <list default="true" id="1ad2df7f-1722-4290-958c-9b8fc5f09134" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +174,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574479775377</updated>
-      <workItem from="1574479786886" duration="50626000" />
+      <workItem from="1574479786886" duration="50873000" />
     </task>
     <task id="LOCAL-00001" summary="Added Historic Data feature">
       <created>1574534452543</created>
@@ -208,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574559414007</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated few changes">
+      <created>1574659441898</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574659441898</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
