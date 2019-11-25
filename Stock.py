@@ -4,12 +4,21 @@ import pandas as pd
 import datetime as date
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
-from alpha_vantage.timeseries import TimeSeries
+import pandas_datareader as pd_read
+from ge_code import ge_code
 
 class Stock:
 
     def __init__(self,ticker):
         self.ticker = ticker
+
+    def get_stock_date(self, stock):
+        start_date = '2018-01-01'
+        end_date = str(date.datetime.today())
+        print (stock)
+        data = pd_read.data.DataReader(stock.split("#")[1], 'yahoo', start_date, end_date)
+        data['Date'] = data.index
+        return data
 
     def tweet_Sentiment(self):
         # creating object of TwitterClient Class
@@ -63,58 +72,43 @@ class Stock:
         return str(wed_d)
 
     def daily_stock_data(self, stock2 = None):
-        alpha_vantage_api_key = "AUFGD5JSWQD96T0M"
-        # Your key here
-        ts = TimeSeries(alpha_vantage_api_key)
-        data, meta = ts.get_daily(symbol=str(self.ticker).split('#')[1])
-        today = str(date.datetime.today() - date.timedelta(days= 1)).split(" ")[0]
+        today = str(date.datetime.today())
         print(today)
-        val = list(data[today].values())
-        resp = "Open: " + str(val[0]) + "<br/>High: " + str(val[1]) + "<br/>Low: "
-        resp = resp + str(val[2]) + "<br/>Close: " + str(val[3]) + "<br/>Volume: " + str(val[4] + "<br/>")
+        data = self.get_stock_date(self.ticker)
+        val = data.values[-1:].tolist()
+        resp = str("Open: " + str(val[0][0]) + "<br/>High: " + str(val[0][1]) + "<br/>Low: ")
+        resp = resp + str(val[0][2]) + "<br/>Close: " + str(val[0][3]) + "<br/>Volume: " + str(val[0][4]) + "<br/>"
         #Visualization
-        data_pd = pd.DataFrame(data).T
-        print(data_pd)
-        convert_dict = {'1. open': float,
-                        '2. high': float,
-                        '3. low': float,
-                        '4. close': float,
-                        '5. volume': int,
-                        }
-        df = data_pd.astype(convert_dict)
-        figure(num=None, figsize=(15, 6), dpi=80, facecolor='w', edgecolor='k')
+        print(data)
 
         if stock2 != None:
-            data2, meta2 = ts.get_daily(symbol= stock2)
-            data_pd2 = pd.DataFrame(data2).T
-            df2 = data_pd2.astype(convert_dict)
-            df['4. close'] = df['4. close'] / df['4. close'].max()
-            df2['4. close'] = df2['4. close'] / df2['4. close'].max()
-            df2['Date'] = df2.index
-            df2.sort_values('Date', inplace=True)
-            df2['4. close'].plot()
+            stock2 = "#"+stock2
+            data2 = self.get_stock_date(stock2)
+            data['Close'] = data['Close'] / data['Close'].max()
+            data2['Close'] = data2['Close'] / data2['Close'].max()
+            data2[self.ticker] = data['Close']
+            data2[stock2] = data2['Close']
+            data2.plot(y = [self.ticker,stock2], x = 'Date',grid = True, figsize=(15,6))
             title = "Standardized Close price:" + self.ticker + " vs " + stock2
             plt.title(title)
             resp = ""
         else:
             title = "Close price Graph:" + self.ticker
             plt.title(title)
-        df['Date'] = df.index
-        df.sort_values('Date', inplace=True)
-        df['4. close'].plot()
-        plt.tight_layout()
-        plt.ylabel("Price")
-        plt.xlabel("Date")
-        plt.grid()
+            data.plot(y = 'Close', x = 'Date',grid = True, figsize=(15,6))
         random = str(date.datetime.today()).split(".")[1]
         src = "static/graph" + random + ".jpeg"
-        plt.savefig(src, bbox_inches='tight')
-        plt.show()
+        plt.savefig(src)
         resp = resp + '<a href="/img" target="_blank"> >>CLICK HERE<< </a>' + random
         return resp
+    def stock_predict(self):
+        g = ge_code()
+        return g.execute()
+
 
 def main():
     st = Stock("#AAPL")
-    print(st.daily_stock_data("GOOG"))
+    # print(st.daily_stock_data("GOOG"))
+    print("Predicted:",st.stock_predict())
 if __name__=="__main__":
     main()

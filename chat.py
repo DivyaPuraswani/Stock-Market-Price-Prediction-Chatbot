@@ -6,7 +6,6 @@ import random
 import json
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
-
 from Stock import Stock
 
 
@@ -21,13 +20,13 @@ class chat:
 
     def model_load(self):
         nltk.download('punkt')
-        with open('intents.json') as file:
+        with open('inputs/intents.json') as file:
             self. data = json.load(file)
 
         #print(self.data['intents'])
 
         try:
-            with open('data.pickle', 'rb') as f:
+            with open('models/data.pickle', 'rb') as f:
                 self.words, self.labels, training, output = pickle.load(f)
         except:
             docs_x = []
@@ -70,7 +69,7 @@ class chat:
 
             training = numpy.array(training)
             output = numpy.array(output)
-            with open('data.pickle', 'wb') as f:
+            with open('models/data.pickle', 'wb') as f:
                 pickle.dump((self.words, self.labels, training, output), f)
 
         tensorflow.reset_default_graph()
@@ -85,10 +84,10 @@ class chat:
         #print("training:",training)
         #print("/noutput:",output)
         try:
-           self.model.load('model.tflearn')
+           self.model.load('models/model.tflearn')
         except:
            self.model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
-           self.model.save("model.tflearn")
+           self.model.save("models/model.tflearn")
 
     def bag_of_words(self,s, words):
         bag = [0 for _ in range(len(words))]
@@ -109,7 +108,7 @@ class chat:
         tag = self.labels[results_index]
         print(tag)
         print(results)
-        if results[results_index] > 0.7:
+        if results[results_index] > 0.3:
             if tag == 'stock':
                 stock_name = "#" + inp.split('#')[1]
                 self.tick = stock_name
@@ -117,7 +116,7 @@ class chat:
                           + '<br/>1)Stock Data '
                           + '<br/>2)Twitter Sentiment '
                           + '<br/>3)Investor Sentiment'
-                          + '<br/>4)Forecast of Stock'
+                          + '<br/>4)Predict Close Price'
                           + '<br/>5)Compare with another Stock')
                 return res
             elif tag == 'historic_data':
@@ -130,7 +129,9 @@ class chat:
                 st = Stock(self.tick)
                 return st.investor_sentiment()
             elif tag == 'predict':
-                return '<a href="/img" target="_blank"> >>CLICK HERE<< </a>'
+                st = Stock(self.tick)
+               # '<a href="/img" target="_blank"> >>CLICK HERE<< </a>'
+                return st.stock_predict()
             elif tag == 'compare':
                 st = Stock(self.tick)
                 input = inp.split(' ')
@@ -148,14 +149,14 @@ class chat:
             #print("I didn't get that. Please try again")
             reply = "I didn't get that. Please try again"
         return reply
-# def main():
-#     c = chat()
-#     c.model_load()
-#     print("Start chatting with the bot...(Hit Stop to quit)")
-#     while True:
-#         inp = input("You: ")
-#         if inp.lower() == 'stop':
-#             break
-#         print(c.chatter(inp))
-# if __name__ == '__main__':
-#     main()
+def main():
+    c = chat()
+    c.model_load()
+    print("Start chatting with the bot...(Hit Stop to quit)")
+    while True:
+        inp = input("You: ")
+        if inp.lower() == 'stop':
+            break
+        print(c.chatter(inp))
+if __name__ == '__main__':
+    main()

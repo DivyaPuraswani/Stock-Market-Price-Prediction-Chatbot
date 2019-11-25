@@ -7,8 +7,7 @@ c = ch.chat()
 c.model_load()
 image = gv.global_var()
 
-def set_image(img):
-    c = img
+
 @app.route("/")
 def home():
     return render_template("home.html")
