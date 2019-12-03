@@ -2,10 +2,9 @@ import twitter as twt
 import requests
 import pandas as pd
 import datetime as date
-from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
 import pandas_datareader as pd_read
-from ge_code import ge_code
+from lstm_model import lstm_model
 
 class Stock:
 
@@ -51,32 +50,30 @@ class Stock:
         #     print(tweet['text'])
         return str(pt + '<br />' + nt + '<br />' + nut)
     def investor_sentiment(self):
-        wed = self.get_Wednesday()
-        print(wed)
-        Link = "https://www.quandl.com/api/v3/datasets/AAII/AAII_SENTIMENT.json?api_key=XsXNLg3263w9ksoCtkBB&start_date=" +wed
+        Link = "https://www.quandl.com/api/v3/datasets/AAII/AAII_SENTIMENT.json?api_key=XsXNLg3263w9ksoCtkBB&start_date="
         re = requests.get(url=Link)
         obj = re.json()['dataset']
-        m = pd.DataFrame(obj['data'], columns=obj['column_names'])*100
+        m = pd.DataFrame(obj['data'], columns=obj['column_names']).head(1)*100
         para = str(m.loc[0, ['Bullish', 'Neutral', 'Bearish']]).split("\n")
         reply = para[0] + "% <br/>" + para[1]+ "% <br/>" + para[2] + "%"
         return reply
-    def get_Wednesday(self):
-        today_d = date.datetime.today()
-        day = int(today_d.weekday())
-        reduct = 0
-        if day > 3:
-            reduct = day - 3
-        elif day < 3:
-            reduct = day + 7 - 3
-        wed_d = today_d - date.timedelta(days=reduct)
-        return str(wed_d)
+    # def get_Wednesday(self):
+    #     today_d = date.datetime.today()
+    #     day = int(today_d.weekday())
+    #     reduct = 0
+    #     if day > 3:
+    #         reduct = day - 3
+    #     elif day < 3:
+    #         reduct = day + 7 - 3
+    #     wed_d = today_d - date.timedelta(days=reduct)
+    #     return str(wed_d)
 
     def daily_stock_data(self, stock2 = None):
         today = str(date.datetime.today())
         print(today)
         data = self.get_stock_date(self.ticker)
         val = data.values[-1:].tolist()
-        resp = str("Open: " + str(val[0][0]) + "<br/>High: " + str(val[0][1]) + "<br/>Low: ")
+        resp = str("Open: " + str(val[0][0]) + "<br/>Low: " + str(val[0][1]) + "<br/>High: ")
         resp = resp + str(val[0][2]) + "<br/>Close: " + str(val[0][3]) + "<br/>Volume: " + str(val[0][4]) + "<br/>"
         #Visualization
         print(data)
@@ -102,13 +99,16 @@ class Stock:
         resp = resp + '<a href="/img" target="_blank"> >>CLICK HERE<< </a>' + random
         return resp
     def stock_predict(self):
-        g = ge_code()
-        return g.execute()
+        print(self.ticker)
+        print("self.ticker:",self.ticker)
+        l = lstm_model()
+        return l.execute(self.ticker)
 
 
-def main():
-    st = Stock("#AAPL")
-    # print(st.daily_stock_data("GOOG"))
-    print("Predicted:",st.stock_predict())
-if __name__=="__main__":
-    main()
+# def main():
+#     st = Stock("#MSFT")
+#     # print(st.daily_stock_data("GOOG"))
+#     print("Predicted:",st.stock_predict())
+#
+# if __name__=="__main__":
+#     main()

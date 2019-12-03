@@ -130,7 +130,6 @@ class chat:
                 return st.investor_sentiment()
             elif tag == 'predict':
                 st = Stock(self.tick)
-               # '<a href="/img" target="_blank"> >>CLICK HERE<< </a>'
                 return st.stock_predict()
             elif tag == 'compare':
                 st = Stock(self.tick)
